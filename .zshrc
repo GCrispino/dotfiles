@@ -1,6 +1,13 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 #if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 #  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 #fi
@@ -72,7 +79,7 @@ alias cp="cp -i"                                                # Confirm before
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
 alias gitu='git add . && git commit && git push'
-alias l='colorls --sd --light'
+alias l='~/.gem/ruby/2.6.0/bin/colorls --sd --light'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 # Theming section  
@@ -104,7 +111,7 @@ setopt prompt_subst
 # Maia prompt
 PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " # Print some system information when the shell is first started
 # Print a greeting message when shell is started
-echo $USER@$HOST  $(uname -srm) $(lsb_release -rcs)
+# echo $USER@$HOST  $(uname -srm) $(lsb_release -rcs)
 ## Prompt on right side:
 #  - shows status of git when in git repository (code adapted from https://techanic.net/2012/12/30/my_git_prompt_for_zsh.html)
 #  - shows exit status of previous command (if previous command finished with an error)
@@ -193,6 +200,7 @@ source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighti
 # Use history substring search
 #source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
 source ~/.oh-my-zsh/plugins/npm/npm.plugin.zsh
 source ~/.oh-my-zsh/plugins/laravel/laravel.plugin.zsh
 # Add emcc env variables
@@ -208,11 +216,11 @@ bindkey '^[[B' history-substring-search-down
 bindkey '^H' backward-kill-word
 
 # Apply different settigns for different terminals
-case $(basename "$(cat "/proc/$PPID/comm")") in
-  login)
-    	RPROMPT="%{$fg[red]%} %(?..[%?])" 
-    	alias x='startx ~/.xinitrc'      # Type name of desired desktop after x, xinitrc is configured for it
-    ;;
+# case $(basename "$(cat "/proc/$PPID/comm")") in
+#   login)
+#     	RPROMPT="%{$fg[red]%} %(?..[%?])" 
+#     	alias x='startx ~/.xinitrc'      # Type name of desired desktop after x, xinitrc is configured for it
+#     ;;
 #  'tmux: server')
 #        RPROMPT='$(git_prompt_string)'
 #		## Base16 Shell color themes.
@@ -231,15 +239,15 @@ case $(basename "$(cat "/proc/$PPID/comm")") in
 #		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 #  		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 #     ;;
-  *)
-        RPROMPT='$(git_prompt_string)'
-		# Use autosuggestion
-		#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-		source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-  		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-    ;;
-esac
+#   *)
+#         RPROMPT='$(git_prompt_string)'
+# 		# Use autosuggestion
+# 		#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# 		# source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# 		# ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+#   		# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+#     ;;
+# esac
 
 
 # Change cursor shape for different vi modes.
@@ -257,7 +265,8 @@ function zle-keymap-select {
 
 #POWERLEVEL9K_MODE='nerdfont-complete'
 #POWERLEVEL9K_MODE='awesome-patched'
-source /usr/share/zsh-theme-powerlevel10k/powerlevel9k.zsh-theme
+# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # vifm exit to current directory
 vicd()
@@ -302,13 +311,23 @@ export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$HOME/.dotnet
 
 # virtualenvwrapper
-export WORKON_HOME=~/Envs
-source ~/.local/bin/virtualenvwrapper.sh
+# export WORKON_HOME=~/Envs
+# source ~/.local/bin/virtualenvwrapper.sh
 
-# pyenv
-export PATH="/home/crispino/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# pyenv - linux
+# export PATH="/home/crispino/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+
+# pyenv - mac
+# echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zprofile
+# echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zprofile
+# echo 'eval "$(pyenv init --path)"' >> ~/.zprofile
+# 
+# echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 
 
 [[ -s "/home/crispino/.gvm/scripts/gvm" ]] && source "/home/crispino/.gvm/scripts/gvm"
@@ -320,9 +339,38 @@ export SSLKEYLOGFILE=~/.ssl-key.log
 export PATH=$PATH:"/home/crispino/.local/share/solana/install/active_release/bin"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
+source .secrets.env
+
+# GPG
+export GPG_TTY=$(tty)
+
+# Brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# kubeconfig per session
+# file="$(mktemp -t "kubectx.XXXXXX")"
+# export KUBECONFIG="${file}:${KUBECONFIG}"
+# cat <<EOF >"${file}"
+# apiVersion: v1
+# kind: Config
+# current-context: ""
+# EOF
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/gabriel/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/crispino/Applications/google-cloud-sdk/path.zsh.inc' ]; then . '/home/crispino/Applications/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/gabriel/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gabriel/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/crispino/Applications/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/crispino/Applications/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/gabriel/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/gabriel/google-cloud-sdk/completion.zsh.inc'; fi
+
+export PATH="$PATH:$(go env GOPATH)/bin"
