@@ -10,6 +10,8 @@ set statusline+=%*
 set incsearch
 set hlsearch
 set number 
+set relativenumber
+set mouse=a
 
 "set background=light
 "set termguicolors
@@ -90,11 +92,6 @@ function! StartUp()
 endfunction
 
 autocmd VimEnter * call StartUp()
-
-autocmd BufWritePre *.js Neoformat
-autocmd BufWritePre *.json Neoformat
-" autocmd BufWritePre *.py Neoformat
-autocmd BufWritePre *.purs Neoformat
 
 " coc.nvim (begin)
 " if hidden is not set, TextEdit might fail.
@@ -229,3 +226,5 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Bind CTRL-backspace to CTRL-W
 inoremap <C-H> <C-W>
+
+
