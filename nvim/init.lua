@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -906,6 +906,20 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<Leader>db', dap.toggle_breakpoint, {})
       vim.keymap.set('n', '<Leader>dc', dap.continue, {})
+    end,
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      local tree = require 'nvim-tree'
+      tree.setup()
+
+      local api = require 'nvim-tree.api'
+
+      vim.keymap.set('n', '<Leader>t', api.tree.toggle, { desc = 'nvim-[t]ree: Toggle' })
     end,
   },
 
