@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -512,10 +512,6 @@ require('lazy').setup({
           --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-          map('<leader>f', function()
-            vim.lsp.buf.format { async = true }
-          end, '[F]ormat code')
-
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -615,6 +611,16 @@ require('lazy').setup({
 
   { -- Autoformat
     'stevearc/conform.nvim',
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
@@ -924,6 +930,15 @@ require('lazy').setup({
   },
   {
     '/tpope/vim-fugitive',
+  },
+  {
+    '/mg979/vim-visual-multi',
+    init = function()
+      vim.g.VM_maps = {
+        ["Add Cursor Down"] = "<C-s-Down>",
+        ["Add Cursor Up"] = "<C-s-Up>",
+      }
+    end
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
