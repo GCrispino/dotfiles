@@ -10,16 +10,6 @@
 	<string></string>
 	<key>AlwaysAcceptFirstMouse</key>
 	<true/>
-	<key>AppleAntiAliasingThreshold</key>
-	<integer>1</integer>
-	<key>ApplePressAndHoldEnabled</key>
-	<false/>
-	<key>AppleScrollAnimationEnabled</key>
-	<integer>0</integer>
-	<key>AppleSmoothFixedFontsSizeThreshold</key>
-	<integer>1</integer>
-	<key>AppleWindowTabbingMode</key>
-	<string>manual</string>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>Arthur</key>
@@ -4013,7 +4003,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>tmux set-environment -g ITERM_PROFILE "Default"</string>
+			<string></string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -4075,7 +4065,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string>tmux set-environment -g ITERM_PROFILE "Default"</string>
+			<string>tmux set-environment -g ITERM_PROFILE "Default" &amp;&amp; export ITERM_PROFILE=Default</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -4394,7 +4384,7 @@
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
 			<false/>
 			<key>Right Option Key Sends</key>
@@ -4757,7 +4747,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string>tmux set-environment -g ITERM_PROFILE "Dark"</string>
+			<string>tmux set-environment -g ITERM_PROFILE "Dark" &amp;&amp; export ITERM_PROFILE=Dark</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -5399,7 +5389,7 @@
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Text</key>
-			<string>tmux set-environment -g ITERM_PROFILE "Default"</string>
+			<string>tmux set-environment -g ITERM_PROFILE "Default" &amp;&amp; export ITERM_PROFILE=Default</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
