@@ -936,7 +936,11 @@ require("lazy").setup({
 		"nvim-tree/nvim-tree.lua",
 		config = function()
 			local tree = require("nvim-tree")
-			tree.setup()
+			tree.setup({
+				update_focused_file = {
+					enable = true,
+				},
+			})
 
 			local api = require("nvim-tree.api")
 
