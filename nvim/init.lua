@@ -406,6 +406,15 @@ require('lazy').setup({
         -- pickers = {}
         defaults = {
           file_ignore_patterns = { 'node_modules' },
+          mappings = {
+            n = {
+              ['<c-d>'] = require('telescope.actions').delete_buffer,
+            }, -- n
+            i = {
+              ['<C-h>'] = 'which_key',
+              ['<c-d>'] = require('telescope.actions').delete_buffer,
+            }, -- i
+          },
         },
         pickers = {
           live_grep = {
