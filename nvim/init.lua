@@ -1010,8 +1010,8 @@ require('lazy').setup({
     'mg979/vim-visual-multi',
     init = function()
       vim.g.VM_maps = {
-        ['Select Cursor Down'] = '<C-j>', -- Start selecting down
-        ['Select Cursor Up'] = '<C-k>', -- Start selecting up
+        ['Select Cursor Down'] = '<M-j>', -- Start selecting down
+        ['Select Cursor Up'] = '<M-k>', -- Start selecting up
         ['Goto Next'] = '}',
         ['Goto Prev'] = '{',
       }
