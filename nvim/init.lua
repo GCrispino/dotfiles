@@ -673,6 +673,7 @@ require('lazy').setup({
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
+        -- return false
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
@@ -970,6 +971,10 @@ require('lazy').setup({
   },
   {
     'nvim-tree/nvim-tree.lua',
+    -- 'gcrispino/nvim-tree.lua',
+    -- branch = 'feat/close-file-buffer',
+    -- dev = true,
+    -- dir = '~/code/lua/nvim-tree.lua',
     config = function()
       local tree = require 'nvim-tree'
       tree.setup {
@@ -991,11 +996,26 @@ require('lazy').setup({
       end, { desc = 'nvim-[t]ree: [F]ind file' })
     end,
   },
+  { 'tpope/vim-fugitive' },
+  { 'github/copilot.vim' },
+  { 'nvim-treesitter/nvim-treesitter-context' },
   {
-    'tpope/vim-fugitive',
+    'goolord/alpha-nvim',
+    dependencies = { 'echasnovski/mini.icons' },
+    config = function()
+      require('alpha').setup(require('alpha.themes.startify').config)
+    end,
   },
   {
-    'github/copilot.vim',
+    'mg979/vim-visual-multi',
+    init = function()
+      vim.g.VM_maps = {
+        ['Select Cursor Down'] = '<C-j>', -- Start selecting down
+        ['Select Cursor Up'] = '<C-k>', -- Start selecting up
+        ['Goto Next'] = '}',
+        ['Goto Prev'] = '{',
+      }
+    end,
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
