@@ -292,7 +292,7 @@ require("lazy").setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  {                   -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     "folke/which-key.nvim",
     event = "VimEnter", -- Sets the loading event to 'VimEnter'
     opts = {
@@ -629,6 +629,7 @@ require("lazy").setup({
         ts_ls = {},
         --
         zls = {},
+        astro = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -979,18 +980,36 @@ require("lazy").setup({
     end,
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    -- 'gcrispino/nvim-tree.lua',
-    -- branch = 'feat/close-file-buffer',
-    -- dev = true,
-    -- dir = '~/code/lua/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     config = function()
-      local tree = require("nvim-tree")
-      tree.setup({
+      local tree = require 'nvim-tree'
+
+      local function my_on_attach(bufnr)
+        local api = require "nvim-tree.api"
+
+        local function opts(desc)
+          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+
+        -- default mappings
+        api.config.mappings.default_on_attach(bufnr)
+
+        -- custom mappings
+        -- vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
+        -- vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
+        vim.keymap.set("n", "<C-c>", function()
+          local node_under_cursor = api.tree.get_node_under_cursor()
+          api.node.buffer.delete(node_under_cursor)
+        end, opts('Close file buffer under cursor (if any exist)'))
+      end
+
+
+      tree.setup {
         update_focused_file = {
           enable = true,
         },
-      })
+        on_attach = my_on_attach,
+      }
 
       local api = require("nvim-tree.api")
 
@@ -1009,10 +1028,24 @@ require("lazy").setup({
   { "github/copilot.vim" },
   { "nvim-treesitter/nvim-treesitter-context" },
   {
-    "goolord/alpha-nvim",
-    dependencies = { "echasnovski/mini.icons" },
+    'goolord/alpha-nvim',
+    dependencies = { 'echasnovski/mini.icons' },
+    -- dev = true,
+    -- dir = '~/code/lua/alpha-nvim',
     config = function()
-      require("alpha").setup(require("alpha.themes.startify").config)
+      local config = require('alpha.themes.startify').config
+      config.opts = vim.tbl_extend(
+        "keep",
+        vim.F.if_nil(config.opts, {}),
+        {
+          autostart = true,
+          keymap = vim.tbl_extend("keep", vim.F.if_nil(vim.tbl_get(config, "opts", "keymap"), {}), {
+            press = { "<CR>", "<2-LeftMouse>" },
+            queue_press = { "<M-CR>", "<M-LeftMouse>" },
+          })
+        }
+      )
+      require('alpha').setup(config)
     end,
   },
   {
@@ -1020,7 +1053,7 @@ require("lazy").setup({
     init = function()
       vim.g.VM_maps = {
         ["Select Cursor Down"] = "<M-j>", -- Start selecting down
-        ["Select Cursor Up"] = "<M-k>", -- Start selecting up
+        ["Select Cursor Up"] = "<M-k>",   -- Start selecting up
         ["Goto Next"] = "}",
         ["Goto Prev"] = "{",
       }
@@ -1036,6 +1069,24 @@ require("lazy").setup({
       require("bufferline").setup()
     end,
   },
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+      "TmuxNavigatorProcessList",
+    },
+    keys = {
+      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
+  }
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
